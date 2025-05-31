@@ -22,7 +22,7 @@ sda-backend-lab/
 │   ├── docker-compose.yml
 │   └── test/
 │       └── result/
-│           └── screenshot.pdf    # Beweis der Funktionalität
+│           └── screenshoot.pdf    # Beweis der Funktionalität
 ```
 
 ## 🚀 Schnellstart
