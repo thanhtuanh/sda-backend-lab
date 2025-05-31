@@ -1,0 +1,10 @@
+### Produkt direkt. 
+## product-service direkt testen,  
+### Ausgabe (erwartet): Produkt #42
+GET http://localhost:8081/products/42
+
+
+### Bestellung über Eureka
+##  order-service ruft intern product-service über Eureka auf: 
+##  Ausgabe (erwartet): Bestellung erstellt für: Produkt #42
+GET http://localhost:8082/orders/42

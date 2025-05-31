@@ -1,0 +1,36 @@
+services:
+  eureka-server:
+    build: ./eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - backend
+
+  product-service:
+    build: ./product-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka-server
+    networks:
+      - backend
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka
+    entrypoint: ["sh", "-c", "sleep 30 && java -jar /app/app.jar"]
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka-server
+      - product-service
+    networks:
+      - backend
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka
+    entrypoint: ["sh", "-c", "sleep 45 && java -jar /app/app.jar"]
+
+networks:
+  backend:
+    driver: bridge

@@ -1,0 +1,29 @@
+# macOS system files
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Maven build output
+target/
+
+# Logs
+*.log
+
+# Java class files
+*.class
+
+# Backup & temp files
+*.tmp
+*.swp
+*.swo
+*.bak
+*~
+
+# Test coverage
+jacoco.exec
+coverage/
+
+# IDE metadata (falls versehentlich vorhanden)
+*.iml
+.idea/
