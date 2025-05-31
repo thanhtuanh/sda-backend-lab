@@ -1,89 +1,75 @@
-# 📦 Microservice-Demo mit Spring Boot & Eureka – im Stil von SDA SE
+# SDA Backend Lab 🧪
 
-Ein vollständiges Beispielprojekt zur Demonstration von Microservice-Kommunikation mit **Spring Boot**, **Eureka Server (Netflix OSS)** und **Docker Compose**.
+Ein persönliches Backend-Labor mit Fokus auf moderne Spring Boot Microservices-Architektur, Service Discovery und Vorbereitung auf die Position bei **SDA SE**.
 
-Dieses Projekt wurde im Rahmen meiner beruflichen Weiterbildung als Java-Entwickler erstellt und eignet sich ideal zur Demonstration meiner Kenntnisse in verteilten Systemen und serviceorientierter Architektur (SOA).
+## 🔍 Überblick
 
----
+Dieses Projekt dient als technische Demonstration für:
+- Microservice-Kommunikation mit Spring Boot
+- Service Discovery via **Eureka**
+- Clean Architecture mit separaten Modulen
+- Dockerisierung und lokale Ausführung mit `docker-compose`
+- Vorbereitung auf Architekturaufgaben im Bewerbungsgespräch
 
-## 🔧 Technologien
+## 📁 Struktur
 
-- Java 17
-- Spring Boot 3.1
-- Spring Cloud (Eureka Client/Server)
-- REST APIs (Spring Web)
-- Docker & Docker Compose
-- Maven (Multi-Stage Build)
-- Service Discovery (Eureka)
-- Inter-Service Communication via `RestTemplate`
-
----
-
-## 📦 Projektstruktur
-
-```text
-eureka-demo/
-├── eureka-server/       → Registrierungszentrale (Eureka Server)
-├── product-service/     → Service A: Produktinformationen
-├── order-service/       → Service B: ruft Produktservice auf
-└── test/result/screenshoot.pdf → Ergebnisnachweis mit Screenshot
+```
+sda-backend-lab/
+├── eureka-demo/              # Beispielprojekt: Eureka + 2 Services
+│   ├── eureka-server/
+│   ├── product-service/
+│   └── order-service/
+├── test/
+│   └── result/
+│       └── screenshot.pdf    # Beweis der Funktionalität
+└── docker-compose.yml        # Startet alle Services gemeinsam
 ```
 
----
+## 🚀 Schnellstart
 
-## ▶️ Schnellstart mit Docker
+### Voraussetzungen
 
-Voraussetzung: [Docker](https://www.docker.com/) ist installiert.
+- Docker & Docker Compose
+- Java 17
+- Maven
+
+### Starten der Services
 
 ```bash
-git clone https://github.com/thanhtuanh/eureka-demo.git
-cd eureka-demo
 docker-compose up --build
 ```
 
----
+Warte 15–20 Sekunden. Danach:
 
-## 🌐 Endpunkte testen
+- 🔗 [Eureka Dashboard](http://localhost:8761)
+- 📦 `product-service`: [http://localhost:8081/products/123](http://localhost:8081/products/123)
+- 🧾 `order-service`: [http://localhost:8082/orders/123](http://localhost:8082/orders/123)
 
-- **Eureka Dashboard:**  
-  [http://localhost:8761](http://localhost:8761)
+## 🧭 Beispiel: Service Discovery in Aktion
 
-- **Produkt-Service:**  
-  [http://localhost:8081/products/42](http://localhost:8081/products/42)  
-  → `Produkt #42`
+Der `order-service` ruft intern über den **Service-Namen `product-service`** auf und erhält Produktdaten. Die Service-URL wird dynamisch über Eureka aufgelöst.
 
-- **Bestell-Service (via Eureka):**  
-  [http://localhost:8082/orders/42](http://localhost:8082/orders/42)  
-  → `Bestellung erstellt für: Produkt #42`
+## 🖼️ Screenshot
 
----
+![Screenshot](./test/result/screenshot.pdf)
 
-## 📄 Ergebnis-Screenshot
+## 🧩 Technologien
 
-Hier sehen Sie den erfolgreichen Testlauf im `.http`-Format:
+- Java 17
+- Spring Boot 3.1
+- Spring Cloud 2022.0.3
+- Netflix Eureka
+- Docker / Docker Compose
+- REST / LoadBalanced `RestTemplate`
 
-📎 [Ergebnis anzeigen (screenshoot.pdf)](test/result/screenshoot.pdf)
+## 🧪 Weitere Pläne
 
----
-
-## ✅ Lernziele & Highlights
-
-- Verständnis für verteilte Microservice-Architektur
-- Aufbau eines Service-Registry-Systems mit Eureka
-- Dynamische Kommunikation zwischen Services (Service Discovery)
-- Docker-basiertes Deployment von Spring Boot Projekten
+- Auth-Service mit JWT
+- API-Gateway mit Spring Cloud Gateway
+- OpenAI-basierte Microservices
+- Monitoring mit Prometheus & Grafana
 
 ---
 
-## 📂 Referenz
-
-Dieses Projekt ist Teil meines GitHub-Portfolios zur beruflichen Weiterentwicklung:  
-🔗 [https://github.com/thanhtuanh/bewerbung](https://github.com/thanhtuanh/bewerbung)
-
----
-
-## 👤 Autor
-
-Duc Thanh Nguyen  
-Senior Java Fullstack Entwickler  
-📫 [n.thanh@gmx.de](mailto:n.thanh@gmx.de)
+📁 GitHub: [github.com/thanhtuanh/sda-backend-lab](https://github.com/thanhtuanh/sda-backend-lab)  
+🔗 Demo und Erweiterungen folgen!
