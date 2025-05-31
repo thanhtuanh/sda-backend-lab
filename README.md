@@ -51,7 +51,7 @@ Der `order-service` ruft intern über den **Service-Namen `product-service`** au
 
 ## 🖼️ Screenshot
 
-![Screenshot](./eureka-demo/test/result/screenshot.pdf)
+![Screenshot](./eureka-demo/test/result/screenshoot.pdf)
 
 ## 🧩 Technologien
 
