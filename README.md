@@ -15,14 +15,14 @@ Dieses Projekt dient als technische Demonstration für:
 
 ```
 sda-backend-lab/
-├── eureka-demo/              # Beispielprojekt: Eureka + 2 Services
+├── eureka-demo/
 │   ├── eureka-server/
 │   ├── product-service/
-│   └── order-service/
-├── test/
-│   └── result/
-│       └── screenshot.pdf    # Beweis der Funktionalität
-└── docker-compose.yml        # Startet alle Services gemeinsam
+│   ├── order-service/
+│   ├── docker-compose.yml
+│   └── test/
+│       └── result/
+│           └── screenshot.pdf    # Beweis der Funktionalität
 ```
 
 ## 🚀 Schnellstart
@@ -36,6 +36,7 @@ sda-backend-lab/
 ### Starten der Services
 
 ```bash
+cd eureka-demo
 docker-compose up --build
 ```
 
@@ -51,7 +52,7 @@ Der `order-service` ruft intern über den **Service-Namen `product-service`** au
 
 ## 🖼️ Screenshot
 
-![Screenshot](./eureka-demo/test/result/screenshoot.pdf)
+📄 [Vollständiger Screenshot der Anwendung (PDF)](./eureka-demo/test/result/screenshoot.pdf)
 
 ## 🧩 Technologien
 
@@ -62,14 +63,14 @@ Der `order-service` ruft intern über den **Service-Namen `product-service`** au
 - Docker / Docker Compose
 - REST / LoadBalanced `RestTemplate`
 
-## 🧪 Weitere Pläne
+## 🔧 Weiterer Ausbau geplant
 
 - Auth-Service mit JWT
 - API-Gateway mit Spring Cloud Gateway
-- OpenAI-basierte Microservices
 - Monitoring mit Prometheus & Grafana
+- Erweiterung für OpenAI-Integration
 
 ---
 
 📁 GitHub: [github.com/thanhtuanh/sda-backend-lab](https://github.com/thanhtuanh/sda-backend-lab)  
-🔗 Demo und Erweiterungen folgen!
+🔗 Demo und neue Module folgen!
