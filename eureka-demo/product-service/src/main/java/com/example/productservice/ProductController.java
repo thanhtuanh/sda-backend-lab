@@ -8,4 +8,9 @@ public class ProductController {
     public String getProduct(@PathVariable String id) {
         return "Produkt #" + id;
     }
+
+    @GetMapping("/fail")
+    public String fail() {
+        throw new RuntimeException("Absichtlicher Fehler zum Testen");
+    }
 }

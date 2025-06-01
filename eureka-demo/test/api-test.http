@@ -1,10 +1,13 @@
-### Produkt direkt. 
-## product-service direkt testen,  
+### Produkt direkt
+## product-service direkt testen  
 ### Ausgabe (erwartet): Produkt #42
 GET http://localhost:8081/products/42
 
+### Fehlerfall testen
+## Erwartet: HTTP 500 mit Fehlermeldung aus GlobalExceptionHandler
+GET http://localhost:8081/products/fail
 
 ### Bestellung über Eureka
-##  order-service ruft intern product-service über Eureka auf: 
-##  Ausgabe (erwartet): Bestellung erstellt für: Produkt #42
+## order-service ruft intern product-service über Eureka auf  
+## Ausgabe (erwartet): Bestellung erstellt für: Produkt #42
 GET http://localhost:8082/orders/42

@@ -27,3 +27,6 @@ coverage/
 # IDE metadata (falls versehentlich vorhanden)
 *.iml
 .idea/
+
+# my TODOs
+todo.md
