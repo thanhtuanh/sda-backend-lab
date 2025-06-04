@@ -30,3 +30,6 @@ coverage/
 
 # my TODOs
 todo.md
+.env
+
+

@@ -1,0 +1,70 @@
+{
+  "id": null,
+  "uid": "order-dashboard",
+  "title": "📦 Order Service Observability",
+  "timezone": "browser",
+  "schemaVersion": 30,
+  "version": 1,
+  "refresh": "30s",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Active HTTP Requests",
+      "id": 1,
+      "datasource": { "type": "prometheus", "uid": "-" },
+      "targets": [
+        {
+          "expr": "http_server_requests_active{application=\"order-service\"}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 20 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 4 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Request Duration (ms)",
+      "id": 2,
+      "datasource": { "type": "prometheus", "uid": "-" },
+      "targets": [
+        {
+          "expr": "rate(http_server_requests_seconds_sum{application=\"order-service\"}[1m]) / rate(http_server_requests_seconds_count{application=\"order-service\"}[1m])",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "color": { "mode": "palette-classic" },
+          "lineWidth": 2
+        },
+        "overrides": []
+      },
+      "gridPos": { "x": 6, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "type": "traces",
+      "title": "Recent Traces",
+      "id": 3,
+      "datasource": { "type": "tempo", "uid": "-" },
+      "gridPos": { "x": 0, "y": 8, "w": 24, "h": 10 },
+      "options": {
+        "query": "{service.name=\"order-service\"}"
+      }
+    }
+  ]
+}

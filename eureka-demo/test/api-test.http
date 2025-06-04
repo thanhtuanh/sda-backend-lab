@@ -1,13 +1,78 @@
-### Produkt direkt
-## product-service direkt testen  
-### Ausgabe (erwartet): Produkt #42
-GET http://localhost:8081/products/42
+### 🔍 Produktliste abrufen (sollte 200 OK liefern)
+GET http://localhost:8081/products
+Accept: application/json
 
-### Fehlerfall testen
-## Erwartet: HTTP 500 mit Fehlermeldung aus GlobalExceptionHandler
-GET http://localhost:8081/products/fail
+###
 
-### Bestellung über Eureka
-## order-service ruft intern product-service über Eureka auf  
-## Ausgabe (erwartet): Bestellung erstellt für: Produkt #42
-GET http://localhost:8082/orders/42
+### ➕ Neues Produkt erstellen
+POST http://localhost:8081/products
+Content-Type: application/json
+
+{
+  "name": "Testprodukt",
+  "price": 9.99
+}
+
+###
+
+### 🔍 Ein Produkt abrufen (ID = 1), erwartet 200 OK
+GET http://localhost:8081/products/1
+Accept: application/json
+
+###
+
+### ❌ Nicht existierendes Produkt abrufen, erwartet 404
+GET http://localhost:8081/products/9999
+Accept: application/json
+
+###
+
+### 🗑️ Produkt löschen (ID = 1), erwartet 500 , "error": "HttpRequestMethodNotSupportedException",
+### "message": "Request method 'DELETE' is not supported"
+DELETE http://localhost:8081/products/1
+
+###
+
+### ✅ Health-Check für product-service
+GET http://localhost:8081/actuator/health
+Accept: application/json
+
+###
+
+### 🔍 Orderliste abrufen, erwartet 200 OK
+GET http://localhost:8082/orders
+Accept: application/json
+
+###
+
+### ➕ Neue Order anlegen (nutzt Produkt ID 2 als Beispiel)
+POST http://localhost:8082/orders
+Content-Type: application/json
+
+{
+  "productId": 2,
+  "quantity": 3
+}
+
+###
+
+### 🔍 Order abrufen (ID = 1), erwartet 200 OK
+GET http://localhost:8082/orders/1
+Accept: application/json
+
+###
+
+### ❌ Nicht existierende Order abrufen, erwartet 404
+GET http://localhost:8082/orders/9999
+Accept: application/json
+
+###
+
+### 🗑️ Order löschen (ID = 1), erwartet 405 ,  "error": "Method Not Allowed",
+DELETE http://localhost:8082/orders/1
+
+###
+
+### ✅ Health-Check für order-service
+GET http://localhost:8082/actuator/health
+Accept: application/json

@@ -1,23 +1,34 @@
-# 🧠 Lernfortschritt – SDA Backend Lab (privat)
+# 🧠 SDA Backend Lab – Microservice Architektur mit Observability
 
-Dieses Projekt dient der technischen Vertiefung im Bereich moderner Java-Backend-Entwicklung  
-und untersucht die Integration von Modulen aus `sda-spring-boot-commons` sowie angrenzenden Technologien im Umfeld verteilter Systeme.
+Dieses Projekt dient der technischen Vertiefung im Bereich moderner Java-Backend-Entwicklung mit Fokus auf:
+
+* Microservice-Architektur mit Spring Boot
+* Wiederverwendbare Komponenten aus `sda-spring-boot-commons`
+* Service Discovery mit Eureka
+* Fehlerhandling, strukturierte Logs & Tracing
+* Observability mit OpenTelemetry, Prometheus & Grafana Tempo
 
 ---
 
-## 🚀 Ziel des Projekts
+## 🚀 Projektziele
 
-Dieses Projekt entstand aus dem Interesse, moderne Backend-Architekturen mit Spring Boot zu vertiefen und den Einsatz wiederverwendbarer Komponenten in verteilten Systemen besser zu verstehen.
+* Aufbau eines stabilen, wartbaren Microservice-Systems
+* Technische Vertiefung in moderne Open-Source-Werkzeuge rund um Observability
+* Erweiterung praktischer Erfahrung mit Tracing, Metrics und Logs in Cloud-nahen Systemen
 
-Im Mittelpunkt steht der praktische Umgang mit der Bibliothek `sda-spring-boot-commons` (SSBC), um folgende Schwerpunkte umzusetzen:
+---
 
-- klare und erweiterbare Projektstruktur mit Spring Boot
-- Entwicklung robuster REST-Schnittstellen auf Basis etablierter Standards
-- zentrales Fehlerhandling und strukturiertes Logging (inkl. Trace-ID)
-- automatisierte Konfiguration und Wiederverwendbarkeit durch SSBC
-- Einstieg in weiterführende Themen wie Observability, Service Discovery und Clean Code
+## 🔧 Technologien
 
-Das Projekt dient gleichzeitig als technische Übung zur Vertiefung von Best Practices für wartbare, testbare und skalierbare Backend-Services.
+| Bereich        | Tools / Frameworks                   |
+| -------------- | ------------------------------------ |
+| Framework      | Spring Boot 3.3, Java 17             |
+| Microservices  | Eureka Discovery, RestTemplate       |
+| Logging        | SLF4J, MDC, Logback + Correlation-ID |
+| Tracing        | OpenTelemetry + OTLP (Trace/Span)    |
+| Monitoring     | Micrometer, Prometheus               |
+| Visualisierung | Grafana, Tempo (Traces), Dashboards  |
+| Deployment     | Docker Compose                       |
 
 ---
 
@@ -26,125 +37,96 @@ Das Projekt dient gleichzeitig als technische Übung zur Vertiefung von Best Pra
 ```
 sda-backend-lab/
 ├── eureka-demo/
-│   ├── eureka-server/
-│   ├── product-service/
-│   │   ├── logging/                # Interceptor für MDC Correlation ID
-│   │   ├── exception/              # Zentrales Error Handling
-│   ├── order-service/
-│   ├── docker-compose.yml
-│   └── test/
-│       └── result/
-│           └── screenshoot.pdf    # Beweis der Funktionalität
-├── README.md
-└── todo.md                        # Vorbereitungsplan
+│   ├── eureka-server/           # Service Registry
+│   ├── product-service/         # REST + Observability integriert
+│   ├── order-service/           # ruft product-service auf
+│   ├── test/                    # curl-Testskripte
+│   ├── docker-compose.yml       # All-in-One Setup
+│   └── prometheus.yml           # Monitoring-Konfiguration
+├── grafana/
+│   └── provisioning/
+│       ├── datasources/
+│       │   └── datasource.yml
+│       ├── dashboards/
+│       │   ├── dashboard.yml
+│       │   ├── product-observability.json
+│       │   └── order-observability.json
+├── README.md                    # Kombinierte Dokumentation
+├── README_Observability.md     # Zusatzdoku (nur Observability)
+└── todo.md                      # Themenplan & Technologietraining
 ```
 
 ---
 
-## 📌 Funktionsüberblick
+## 🔍 Core-Funktionalität
 
-Dieses Projekt demonstriert:
+### 🔹 Microservices
 
-- Microservice-Kommunikation mit Spring Boot
-- Service Discovery mit **Eureka**
-- SSBC-nahe Funktionalitäten:
-  - 📌 `X-Correlation-Id` Interceptor (Header + MDC Logging)
-  - 📌 Globales Exception Handling
-- Dockerisierte Ausführung mit `docker-compose`
-- Vorbereitung auf Architektur- und Codereviews bei SDA SE
+* `product-service`: REST API, MDC Logging, Exception Handling
+* `order-service`: REST Call via Eureka-Discovery auf `product-service`
+
+### 🔹 Fehler-Handling
+
+* Zentrale Fehlerbehandlung mit `@RestControllerAdvice`
+* Automatische Rückgabe strukturierter JSON-Fehlermeldungen
+
+### 🔹 Logging & Correlation ID
+
+* Jeder Request erhält `X-Correlation-Id`
+* Automatische Übergabe im HTTP-Header & Log-Kontext (MDC)
 
 ---
 
-## ✅ Modulübersicht nach Themen
+## 📈 Observability mit OpenTelemetry
 
-### 🧱 Struktur & REST
-- [x] Projektstruktur erstellt (Spring Boot + Maven)
-- [ ] REST API mit `sda-commons-starter-web`
-- [ ] OpenAPI + Swagger UI
+### 🔧 Setup
 
-### ❗ Fehlerbehandlung
-- [x] Globales Fehlerhandling mit `@RestControllerAdvice`
-- [ ] Eigene Exceptions + Response-Mapping
+* Tracing mit `opentelemetry-spring-boot-starter`
+* Export zu Tempo Collector (`OTLP gRPC`)
+* Prometheus liest Spring Metriken von Services
+* Grafana zeigt alle Datenquellen zentral an
 
-### 📊 Tracing & Metadata
-- [x] MDC Logging mit `X-Correlation-Id`
-- [ ] metadata-context Integration
+### 📊 Dashboards
 
-### 📬 Kafka
-- [ ] Kafka Producer & Consumer (Startermodul)
-- [ ] Fehlerbehandlung + DLQ
+| Dashboard                        | Inhalt                         |
+| -------------------------------- | ------------------------------ |
+| 📊 Product Service Observability | Requests, Dauer, Traces        |
+| 📦 Order Service Observability   | Traces + Performance über Zeit |
 
-### 🧪 Testing
-- [ ] `web-testing` für Integrationstests
-- [ ] Testcontainers (Postgres / Kafka)
+### 🔗 Zugriff
 
-### 🔐 Security
-- [ ] JWT-Verarbeitung mit Spring Security
-- [ ] Rollenbasierte Zugriffe
-
-### ⚙️ DevOps
-- [x] Dockerfile & Compose
-- [ ] GitHub Actions (CI)
-- [ ] Helm Chart
-
-### 📈 Observability
-- [ ] Prometheus / Grafana lokal
-- [ ] Zipkin Tracing
-
-### 🔄 API-Design
-- [ ] API-Versionierung (`v1`, `v2`)
-- [ ] OpenAPI Client Generator
+* Grafana UI: [http://localhost:3000](http://localhost:3000)
+* Benutzer: `admin` / Passwort: `admin`
 
 ---
 
 ## 🚀 Schnellstart
 
-### Voraussetzungen
+### Voraussetzungen:
 
-- Java 17
-- Maven
-- Docker & Docker Compose
+* Java 17, Maven
+* Docker & Docker Compose
 
-### Starten der Services
+### Starten:
 
 ```bash
 cd eureka-demo
 docker-compose up --build
 ```
 
-Nach ca. 30–45 Sekunden:
-
-- 🔗 Eureka Dashboard: [http://localhost:8761](http://localhost:8761)
-- 📦 Produkt-Service: [http://localhost:8081/products/42](http://localhost:8081/products/42)
-- 🧾 Order-Service: [http://localhost:8082/orders/42](http://localhost:8082/orders/42)
-
----
-
-## 🧩 SSBC-ähnliche Features im `product-service`
-
-| Feature              | Beschreibung                                                  |
-|----------------------|---------------------------------------------------------------|
-| ✅ Correlation-ID     | Jeder Request erhält `X-Correlation-Id` (Header + Logging)    |
-| ✅ MDC Logging        | `SLF4J` nutzt `Mapped Diagnostic Context`                     |
-| ✅ Global Exception   | Einheitliches `@RestControllerAdvice` Error-Handling          |
-
-🧪 Testaufrufe:
+### Testen:
 
 ```bash
-curl -H "X-Correlation-Id: demo-123" http://localhost:8081/products/42
-curl http://localhost:8081/products/fail
+curl http://localhost:8081/products/42
+curl http://localhost:8082/orders/42
 ```
 
 ---
 
-## 🖼️ Screenshot
+## 🔍 Motivation als Senior Java Entwickler
 
-📄 [Vollständiger Screenshot der Anwendung (PDF)](./eureka-demo/test/result/screenshoot.pdf)
+Dieses Projekt wurde als persönliche technische Vertiefung initiiert, um moderne Entwicklungen im Bereich der **Observability, Microservice-Kommunikation und Infrastrukturautomatisierung** praxisnah zu erlernen und gezielt auszuprobieren. Ziel ist es, neue Technologien nicht nur theoretisch zu verstehen, sondern in einem echten Anwendungsfall zu erproben und sauber zu dokumentieren.
 
 ---
 
-## 🔗 Links
-
-📁 GitHub: [github.com/thanhtuanh/sda-backend-lab](https://github.com/thanhtuanh/sda-backend-lab)  
-📝 Letztes Update: 2025-05-31  
-🔐 Status: privat – Lern- & Interviewvorbereitungsprojekt
+Letztes Update: 2025-06-03

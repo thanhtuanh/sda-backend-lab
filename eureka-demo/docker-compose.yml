@@ -1,3 +1,5 @@
+### docker-compose.yml (Basisversion ohne Tracing/Monitoring)
+
 services:
   eureka-server:
     build: ./eureka-server

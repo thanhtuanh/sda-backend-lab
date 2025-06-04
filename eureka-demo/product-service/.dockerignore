@@ -1,0 +1,23 @@
+# Ignoriere generierte Dateien und IDE-Artefakte
+target/
+*.log
+*.iml
+.idea/
+.vscode/
+.DS_Store
+
+# Versionskontrollsysteme
+.git
+.gitignore
+
+# OS- und Editor-spezifisch
+*.swp
+*.swo
+*.bak
+Thumbs.db
+
+# Maven Wrapper Cache (optional)
+.mvn/wrapper/maven-wrapper.jar
+
+# Docker-spezifisch (nicht .dockerignore selbst)
+docker-compose.override.yml
