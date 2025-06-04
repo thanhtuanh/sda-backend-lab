@@ -50,7 +50,7 @@ POST http://localhost:8082/orders
 Content-Type: application/json
 
 {
-  "productId": 2,
+  "productId":1,
   "quantity": 3
 }
 
@@ -76,3 +76,20 @@ DELETE http://localhost:8082/orders/1
 ### ✅ Health-Check für order-service
 GET http://localhost:8082/actuator/health
 Accept: application/json
+
+
+## Tracing - Teste die Tracing-Funktionalität
+
+GET http://localhost:8081/products
+X-Correlation-Id: trace-demo-1
+
+###
+
+POST http://localhost:8082/orders
+Content-Type: application/json
+X-Correlation-Id: trace-demo-1
+
+{
+  "productId": 1,
+  "quantity": 2
+}

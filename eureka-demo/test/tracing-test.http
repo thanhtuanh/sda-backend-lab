@@ -1,23 +1,56 @@
-curl -X POST http://localhost:4318/v1/traces \
-  -H "Content-Type: application/json" \
-  -d '{
-    "resourceSpans": [{
-      "resource": {
-        "attributes": [{
-          "key": "service.name",
-          "value": { "stringValue": "demo-client" }
-        }]
-      },
-      "scopeSpans": [{
-        "scope": { "name": "demo-scope" },
-        "spans": [{
-          "traceId": "4bf92f3577b34da6a3ce929d0e0e4736",
-          "spanId": "00f067aa0ba902b7",
-          "name": "GET /api/test",
-          "kind": "SPAN_KIND_CLIENT",
-          "startTimeUnixNano": "1581452772000000000",
-          "endTimeUnixNano": "1581452773000000000"
-        }]
-      }]
-    }]
-  }'
+### 1. Produkt anlegen (für Trace-Test)
+POST http://localhost:8081/products
+Content-Type: application/json
+
+{
+  "name": "TracingTestProdukt",
+  "price": 12.34
+}
+
+###
+
+### 2. Produktliste abrufen (Trace beobachten)
+GET http://localhost:8081/products
+Accept: application/json
+
+###
+
+### 3. Produktdetails abrufen (mit X-Correlation-Id für Trace)
+GET http://localhost:8081/products/1
+Accept: application/json
+X-Correlation-Id: tracing-test-id-123
+
+###
+
+### 4. Health-Check (mit X-Correlation-Id)
+GET http://localhost:8081/actuator/health
+Accept: application/json
+X-Correlation-Id: tracing-test-health-1
+
+###
+
+### 5. Order anlegen (nutzt Produkt ID 1, Trace verfolgen)
+POST http://localhost:8082/orders
+Content-Type: application/json
+X-Correlation-Id: tracing-order-test-1
+
+{
+  "productId": 1,
+  "quantity": 2
+}
+
+###
+
+### 6. Orderliste abrufen (Trace beobachten)
+GET http://localhost:8082/orders
+Accept: application/json
+X-Correlation-Id: tracing-order-list-1
+
+###
+
+### 7. Einzelne Order abrufen (Order-ID 1, Trace)
+GET http://localhost:8082/orders/1
+Accept: application/json
+X-Correlation-Id: tracing-order-get-1
+
+###
